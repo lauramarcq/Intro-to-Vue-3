@@ -10,10 +10,72 @@
   </head>
   <body>
     <div id="app">
-      <h1>Product goes here</h1>
+      <div class="nav-bar"></div>
+
+      <div class="cart">Cart({{ cart }})</div>
+
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image">
+            <img 
+              v-bind:src="image" 
+              alt="socks"
+              :class="{ 'out-of-stock-img': !inStock}">
+          </div>
+          <div class="product-info">
+            <h1>{{ title }}</h1>
+            <p v-if="inStock">In Stock</p>
+            <p v-else>Out of Stock</p>
+            <p v-show="showYes">I'm a v-show</p>
+            <p v-if="disponible > 10">Disponible</p>
+            <p v-else-if="disponible < 10 && disponible > 0">Quedan pocos</p>
+            <p v-else>Se acabaron</p>
+            <p>{{ description }}</p>
+            <p v-if="onSale"> {{ saleMessage }}</p>
+            <a :href="url">this is a link</a>
+
+            <ul>
+              <li v-for="detail in details"> {{ detail }}</li>
+            </ul>
+
+            <div 
+                v-for="(variant, index) in variants" 
+                :key="variant.id" 
+                @mouseover="updateVariant(index)"
+                class="color-circle"
+                :style="{backgroundColor: variant.color}"></div>
+          </div>
+            <ul>
+            <li v-for="size of sizes">
+              <button>Size: {{ size }}</button>
+            </li>
+            </ul>
+
+            <button 
+              class="button" 
+              @click="addToCart"
+              :disabled="!inStock"
+              :class="{disabledButton: !inStock }">Add to cart</button>
+
+
+              <!-- blabla -->
+            <button 
+              class="button2" 
+              v-if="cart !== 0" 
+              @click="removeFromCart">Remove from cart</button>
+          </div>
+        </div>
+      </div>
+      
+      
     </div>
 
-    <!-- Import Js -->
+    <!-- Import App -->
     <script src="./main.js"></script>
+
+    <!-- Mount App -->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
 </html>
